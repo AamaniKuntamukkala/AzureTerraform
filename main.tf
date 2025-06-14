@@ -16,7 +16,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 module "network" {
-  source              = "./modules/network"
+  source              = "/root/code/AzureTerraform/newAZTF/modules/network"
   rg_name             = azurerm_resource_group.rg.name
   location            = var.location
   vnet_name           = "prod-vnet"
@@ -27,14 +27,14 @@ module "network" {
 }
 
 module "nsg" {
-  source     = "./modules/nsg"
+  source     = "/root/code/AzureTerraform/newAZTF/modules/nsg"
   rg_name    = azurerm_resource_group.rg.name
   location   = var.location
   subnet_ids = module.network.subnet_ids
 }
 
 module "compute" {
-  source       = "./modules/compute"
+  source       = "/root/code/AzureTerraform/newAZTF/modules/compute"
   rg_name      = azurerm_resource_group.rg.name
   location     = var.location
   subnet_id    = module.network.private_subnet_id
@@ -44,7 +44,7 @@ module "compute" {
 }
 
 module "appgw" {
-  source           = "./modules/appgw"
+  source           = "/root/code/AzureTerraform/newAZTF/modules/appgw"
   rg_name         = azurerm_resource_group.rg.name
   location        = var.location
   subnet_id       = module.network.public_subnet_id
@@ -53,7 +53,7 @@ module "appgw" {
 }
 
 module "database" {
-  source         = "./modules/database"
+  source         = "/root/code/AzureTerraform/newAZTF/modules/database"
   rg_name        = azurerm_resource_group.rg.name
   location       = var.location
   subnet_id      = module.network.db_subnet_id
